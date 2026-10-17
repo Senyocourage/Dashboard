@@ -3,6 +3,11 @@ import { useState } from "react";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+  function handleLogout() {
+    setIsLoggedIn(false);
+  }
 
   // Dashboard summary cards
   const stats = [
@@ -68,6 +73,24 @@ function App() {
     );
   });
 
+  if (!isLoggedIn) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-gray-100 p-6">
+        <section
+          aria-live="polite"
+          className="w-full max-w-md rounded-xl bg-white p-8 text-center shadow-sm"
+        >
+          <h1 className="text-2xl font-bold text-gray-900">
+            You’re signed out
+          </h1>
+          <p className="mt-2 text-gray-600">
+            Your dashboard session has ended.
+          </p>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 md:flex">
       {/* Sidebar */}
@@ -115,6 +138,14 @@ function App() {
             </li>
           </ul>
         </nav>
+
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="mt-8 w-full bg-red-800 rounded-lg border border-gray-700 px-4 py-3 text-left font-medium text-gray-200 transition-colors hover:bg-gray-800 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Log out
+        </button>
       </aside>
 
       {/* Main content */}
